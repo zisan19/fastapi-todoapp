@@ -1,0 +1,23 @@
+CREATE TABLE users (
+  id INT AUTO_INCREMENT,
+  email VARCHAR(200) DEFAULT NULL,
+  username VARCHAR(45) DEFAULT NULL,
+  firstname VARCHAR(45) DEFAULT NULL,
+  lastname VARCHAR(45) DEFAULT NULL,
+  hash_password VARCHAR(200) DEFAULT NULL,
+  is_active BOOLEAN DEFAULT NULL,
+  role VARCHAR(45) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+
+CREATE TABLE todos (
+  id INT,
+  title VARCHAR(200) DEFAULT NULL,
+  description VARCHAR(200) DEFAULT NULL,
+  priority INT DEFAULT NULL,
+  completed BOOLEAN DEFAULT NULL,
+  owner_id INT DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (owner_id) REFERENCES users(id)
+);
