@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 import models
-from models import Todos,Users
+from models import Todos, Users
 from typing import Annotated
 from database import engine, SessionLocal
 from fastapi.responses import JSONResponse
@@ -12,6 +12,13 @@ from router.auth import get_current_user
 
 app = FastAPI()
 
+@app.get('/health')
+def health_check():
+    return {
+        "status": "healthy",
+        "message": "FastAPI server is running"
+    }
+    
 class Todo(BaseModel):
     id : int
     title : str
@@ -108,6 +115,7 @@ def delete_todos(user: user_dependency, db : db_dependency, todo_id : int):
     db.commit()
     return JSONResponse(status_code=200, content={'message' : 'To do deleted successfully'})
 
+    
 @app.get('/user')
 def get_user(user: user_dependency, db : db_dependency):
 
@@ -115,5 +123,3 @@ def get_user(user: user_dependency, db : db_dependency):
         raise HTTPException(status_code=401, detail='Failed Authentication')
     
     return db.query(Users).filter(Users.id == user.get('id')).first()
-
-    
