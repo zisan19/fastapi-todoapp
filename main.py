@@ -12,12 +12,6 @@ from router.auth import get_current_user
 
 app = FastAPI()
 
-@app.get('/health')
-def health_check():
-    return {
-        "status": "healthy",
-        "message": "FastAPI server is running"
-    }
     
 class Todo(BaseModel):
     id : int
